@@ -17,17 +17,18 @@ from flask import make_response
 app = Flask(__name__)
 
 
-@app.route('/', methods = ['POST', 'GET'])
-def index():
-    if request.method == 'POST':
-        name = request.form.get('name')
-        email = request.form.get('email')
-        response = make_response(redirect('welcom'))
-        response.set_cookie('user_name', name)
-        response.set_cookie('user_email', email)
-        return response
+@app.post('/')
+def index_post():
+    name = request.form.get('name')
+    email = request.form.get('email')
+    response = make_response(redirect('welcom'))
+    response.set_cookie('user_name', name)
+    response.set_cookie('user_email', email)
+    return response
+
+@app.get('/')
+def index_get():
     return render_template('index.html')
-  
 
 @app.route('/welcom/')
 def welcom():
